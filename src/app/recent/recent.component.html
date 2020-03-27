@@ -1,0 +1,10 @@
+<div class="recent-container">
+    <div *ngFor="let element of recentRequests">
+        <a [routerLink]="['/weather', element.item.city]">{{
+            element.item.city
+        }}</a>
+        <button class="btn-remove" (click)="removeByKey(element.key)">
+            Remove
+        </button>
+    </div>
+</div>

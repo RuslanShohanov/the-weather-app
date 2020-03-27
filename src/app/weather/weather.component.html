@@ -1,0 +1,10 @@
+<div class="navigation">
+    <button class="btn-daily" (click)="switchForecastMode('daily')">
+        Daily
+    </button>
+    <button class="btn-forecast" (click)="switchForecastMode('days5')">
+        5 Days Forecast
+    </button>
+</div>
+<current *ngIf="isMode('daily')" [weather]="currentWeather"></current>
+<forecast *ngIf="isMode('days5')" [forecast]="forecast"></forecast>
