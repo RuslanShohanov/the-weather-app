@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { DailyWeather } from "../daily-weather";
+import { Component, Input } from "@angular/core";
 
-const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+import { DailyWeather } from "../daily-weather";
+import { DaysOfWeek } from '../interfaces';
 
 @Component({
     selector: "forecast",
@@ -12,6 +12,6 @@ export class ForecastComponent {
     @Input() forecast: DailyWeather[];
 
     getDay(day: number) {
-        return days[day];
+        return DaysOfWeek[day];
     }
 }

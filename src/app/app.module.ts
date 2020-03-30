@@ -1,8 +1,10 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { Routes, RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
+import { StoreModule } from "@ngrx/store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { EffectsModule } from "@ngrx/effects";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -12,13 +14,10 @@ import { WeatherComponent } from "./weather/weather.component";
 import { CurrentComponent } from "./weather/current/current.component";
 import { ForecastComponent } from "./weather/forecast/forecast.component";
 import { RecentComponent } from "./recent/recent.component";
-
-const appRoutes: Routes = [
-    { path: "", component: HomeComponent },
-    { path: "recent", component: RecentComponent },
-    { path: "weather/:request", component: WeatherComponent },
-    { path: "**", redirectTo: "/" }
-];
+import { appReducers } from "./store/reducers/app.reducers";
+import { StoreRouterConnectingModule } from "@ngrx/router-store";
+import { environment } from "../environments/environment";
+import { RequestEffects } from "./store/effects/request.effects";
 
 @NgModule({
     declarations: [
@@ -28,14 +27,17 @@ const appRoutes: Routes = [
         HomeComponent,
         NavBarComponent,
         WeatherComponent,
-        RecentComponent,
+        RecentComponent
     ],
     imports: [
         FormsModule,
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        RouterModule.forRoot(appRoutes)
+        EffectsModule.forRoot([RequestEffects]),
+        StoreModule.forRoot(appReducers),
+        StoreRouterConnectingModule.forRoot({ stateKey: "router" }),
+        environment.production ? [] : StoreDevtoolsModule.instrument()
     ],
     bootstrap: [AppComponent]
 })

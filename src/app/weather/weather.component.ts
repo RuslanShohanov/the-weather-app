@@ -4,7 +4,6 @@ import { Component, OnInit } from "@angular/core";
 import { WeatherService } from "./weather.service";
 import { DailyWeather } from "./daily-weather";
 import { ForecastMode } from "./interfaces";
-import { environment } from "src/environments/environment";
 
 @Component({
     selector: "weather",
@@ -22,23 +21,12 @@ export class WeatherComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        const requestCity = this.activateRoute.snapshot.params["request"];
-
-        this.weatherService.getDailyWeather(requestCity).subscribe(weather => {
-            this.currentWeather = weather;
-            localStorage.setItem(
-                `${environment.localStorageKey}_${currentDate.getTime()}`,
-                JSON.stringify(weather)
-            );
-        });
-
         this.weatherService
-            .getForecastWeather(requestCity)
-            .subscribe(forecast => {
-                this.forecast = forecast;
+            .getWeather(this.activateRoute.snapshot.params["request"])
+            .subscribe(result => {
+                this.currentWeather = result.daily;
+                this.forecast = result.forecast;
             });
-
-        const currentDate = new Date();
     }
 
     switchForecastMode(mode: string) {
