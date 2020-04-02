@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
+
 import { DailyWeather } from "../daily-weather";
 
 @Component({
@@ -11,10 +12,10 @@ export class CurrentComponent {
 
     getCurrentTime() {
         const currentDate = new Date();
+        const minutes = currentDate.getMinutes();
+
         return `${currentDate.getHours()}:${
-            currentDate.getMinutes() > 9
-                ? currentDate.getMinutes()
-                : `0${currentDate.getMinutes()}`
+            minutes > 9 ? minutes : `0${minutes}`
         }`;
     }
 }

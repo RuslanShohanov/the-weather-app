@@ -1,22 +1,8 @@
-import { DailyWeather } from './daily-weather';
+import { DailyWeather } from "./daily-weather";
 
 export enum ForecastMode {
     Daily = "daily",
     Days5 = "days5"
-}
-
-export interface GeneralInfo {
-    city: string;
-    temperature: string;
-    kind: string;
-    description: string;
-}
-
-export interface AdditionalInfo {
-    windSpeed: string;
-    humidity: string;
-    pressure: string;
-    realFeel: string;
 }
 
 export interface WeatherRespone {
@@ -42,4 +28,14 @@ export interface WeatherRespone {
 export interface RecentSearch {
     key: string;
     item: DailyWeather;
+}
+
+export enum DaysOfWeek {
+    Sun = 0,
+    Mon = 1,
+    Tue = 2,
+    Wed = 3,
+    Thu = 4,
+    Fri = 5,
+    Sat = 6
 }

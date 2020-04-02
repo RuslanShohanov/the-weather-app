@@ -1,9 +1,9 @@
 <div>
     <div class="forecast-container">
         <div class="info-panel" *ngFor="let item of forecast">
-            <div>{{ getDay(item.date.getDay()) }}</div>
-            <div>{{ item.temperature }}</div>
-            <div>{{ item.weatherKind }}</div>
+            <div class="param-info">{{ getDay(item?.date.getDay()) }}</div>
+            <div class="param-info">{{ item?.temperature }}</div>
+            <div class="param-info">{{ item?.weatherKind }}</div>
         </div>
     </div>
 </div>

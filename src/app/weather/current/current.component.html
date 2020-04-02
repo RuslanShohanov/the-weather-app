@@ -1,15 +1,15 @@
 <div class="forecast-container">
     <div class="info-panel">
         <div class="info">
-            <div class="city">{{ weather.city }} | {{ getCurrentTime() }}</div>
-            <div class="temperature">{{ weather.temperature }}</div>
+            <div class="city">{{ weather?.city }} | {{ getCurrentTime() }}</div>
+            <div class="temperature">{{ weather?.temperature }}</div>
             <div class="description">
-                {{ weather.weatherKind }} ({{ weather.description }})
+                {{ weather?.weatherKind }} ({{ weather?.description }})
             </div>
-            <div>Wind speed: {{ weather.windSpeed }}</div>
-            <div>Real feel: {{ weather.realFeel }}</div>
-            <div>Pressure: {{ weather.pressure }}</div>
-            <div>Humidity: {{ weather.humidity }}</div>
+            <div class="param-info">Wind speed: {{ weather?.windSpeed }}</div>
+            <div class="param-info">Real feel: {{ weather?.realFeel }}</div>
+            <div class="param-info">Pressure: {{ weather?.pressure }}</div>
+            <div class="param-info">Humidity: {{ weather?.humidity }}</div>
         </div>
     </div>
 </div>

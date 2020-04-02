@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { Store, select } from "@ngrx/store";
 
-import { environment } from "src/environments/environment";
-import { RecentSearch } from "../weather/interfaces";
+import { IAppState } from "../store/state/app.state";
+import { selectRequestList } from "../store/selectors/request.selector";
+import { GetRequests, RemoveRequest } from "../store/actions/request.action";
 
 @Component({
     selector: "recent",
@@ -9,38 +11,15 @@ import { RecentSearch } from "../weather/interfaces";
     styleUrls: ["recent.component.styl"]
 })
 export class RecentComponent implements OnInit {
-    recentRequests: RecentSearch[] = [];
+    recentRequests = this.store.pipe(select(selectRequestList));
+
+    constructor(private store: Store<IAppState>) {}
 
     ngOnInit() {
-        const keys = Object.keys(localStorage);
-
-        keys.forEach(key => {
-            if (key.startsWith(environment.localStorageKey)) {
-                if (this.recentRequests.length < 10) {
-                    this.recentRequests.push({
-                        key,
-                        item: JSON.parse(localStorage.getItem(key))
-                    });
-                }
-            }
-        });
+        this.store.dispatch(new GetRequests());
     }
 
-    removeByKey(removeKey: string) {
-        const keys = Object.keys(localStorage);
-
-        keys.forEach(key => {
-            if (
-                key.startsWith(environment.localStorageKey) &&
-                key.endsWith(removeKey)
-            ) {
-                const requestToRemove = this.recentRequests.find(
-                    request => request.key === key
-                );
-                const removeAt = this.recentRequests.indexOf(requestToRemove);
-                localStorage.removeItem(key);
-                this.recentRequests.splice(removeAt, 1);
-            }
-        });
+    removeByKey(key: number) {
+        this.store.dispatch(new RemoveRequest(key));
     }
 }

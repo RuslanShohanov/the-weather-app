@@ -1,11 +1,7 @@
-export enum WeatherKind {
-    None = "none",
-    Clean = "clean",
-    Windy = "windy"
-}
+import { WeatherRespone } from "./interfaces";
 
 export class DailyWeather {
-    city: string;
+    city?: string;
     temperature: string;
     weatherKind: string;
     realFeel: string;
@@ -16,25 +12,19 @@ export class DailyWeather {
     visibleness: string;
     date: Date;
 
-    constructor(
-        city: string,
-        temperature: string,
-        realFeel: string,
-        weatherKind: string,
-        description: string,
-        windSpeed: string,
-        humidity: string,
-        pressure: string,
-        date: Date,
-    ) {
-        this.city = city;
-        this.temperature = temperature;
-        this.realFeel = realFeel;
-        this.weatherKind = weatherKind;
-        this.description = description;
-        this.windSpeed = windSpeed;
-        this.humidity = humidity;
-        this.pressure = pressure;
-        this.date = date;
+    constructor(data: WeatherRespone) {
+        this.city = data.name;
+        this.temperature = this.toCelsius(data.main.temp);
+        this.realFeel = this.toCelsius(data.main.feels_like);
+        this.weatherKind = data.weather[0].main;
+        this.description = data.weather[0].description;
+        this.windSpeed = `${data.wind.speed} m/s`;
+        this.humidity = `${data.main.humidity} g/m3`;
+        this.pressure = `${data.main.pressure} mbars`;
+        this.date = new Date(data.dt_txt);
     }
+
+    toCelsius = (fTemp: number) => {
+        return `${Math.round(fTemp - 273.15)}°C`;
+    };
 }
